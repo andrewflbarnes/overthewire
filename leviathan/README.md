@@ -125,4 +125,8 @@ do
 done
 ```
 
+##### 7
+
+Done!
+
 [1]: <https://overthewire.org/wargames/leviathan/> "Leviathan wargames landing page"
