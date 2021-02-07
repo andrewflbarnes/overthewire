@@ -111,4 +111,18 @@ ln -s /etc/leviathan_pass/leviathan6 /tmp/file.log
 ~/leviathan5
 ```
 
+##### 6
+
+Nice and simple - we just want a 4 digit PIN which will give us access to a shell through the `setuid` program.
+```bash
+for i in {0..999}
+do
+    ./leviathan6 $(printf "%04d" $i)
+done
+for i in {1000..9999}
+do
+    ./leviathan6 $i
+done
+```
+
 [1]: <https://overthewire.org/wargames/leviathan/> "Leviathan wargames landing page"
