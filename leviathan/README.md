@@ -76,4 +76,17 @@ When we run the final comman the `printfile` program checks if the full string i
 However when it is passed to the cat command it treats the space as if it is separating two files - so we end
 up catting the local `test` file and the actual file we want - `/etc/leviathan_pass/leviathan3` :)
 
+##### 3
+
+Same as level 1 - just run the `setuid` program `level4` with `ltrace` and check what password it wants. Rerun and
+provide the password which gives a shell and then cat the password file.
+```bash
+ltrace ./level3
+# find out the password
+./level3
+# enter the password
+id
+cat /etc/leviathan_pass/leviathan4
+```
+
 [1]: <https://overthewire.org/wargames/leviathan/> "Leviathan wargames landing page"
