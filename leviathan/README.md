@@ -89,4 +89,17 @@ id
 cat /etc/leviathan_pass/leviathan4
 ```
 
+##### 4
+
+Nigthmare... seems like there's no easy way to go from bits -> ascii on linux?
+
+.trash/bin outputs the required password in binary (grouped by 8 bits).
+
+```bash
+for i in $(./.trash/bin)
+do
+    echo -ne $(printf "\\x%x\n" $((2#$i)) 2>/dev/null)
+done
+```
+
 [1]: <https://overthewire.org/wargames/leviathan/> "Leviathan wargames landing page"
