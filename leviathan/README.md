@@ -102,4 +102,13 @@ do
 done
 ```
 
+##### 5
+
+Running `ltrace ./leviathan5` we see that that the `setuid` program attempts to read `/tmp.file.log`. So we can try
+using a symbolic link here which works
+```bash
+ln -s /etc/leviathan_pass/leviathan6 /tmp/file.log
+~/leviathan5
+```
+
 [1]: <https://overthewire.org/wargames/leviathan/> "Leviathan wargames landing page"
