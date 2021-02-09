@@ -2,7 +2,7 @@
 
 set -e
 
-KRYPTON_PORT=2221
+KRYPTON_PORT=2231
 KRYPTON_URL=krypton.labs.overthewire.org
 KRYPTON_USER=krypton
 KRYPTON_SSH_OPTS=
