@@ -50,8 +50,20 @@ Standard ROT13
 
 ##### 2
 
+Use the program to work out what the subsitution is then reverse it a la `tr`.
 
+```bash
+mkdir /tmp/andrewflbarnes2
+cd /tmp/andrewflbarnes2
+cp /krypton/krypton2/encrypt .
+echo {A..Z} | tr -d ' ' > keyfile.dat
+./encrypt keyfile.dat
+sub=$(cat ciphertext)
+tr "$sub" "A-Z" < /krypton/krypton2/krypton3
+```
 
+Note: Looks like you need to copy the encrypt binary as well or it won't be able to write to the file - probably some issue
+with the EUID.
 
 [1]: <https://overthewire.org/wargames/krypton/> "krypton wargames landing page"
 [2]: <https://overthewire.org/wargames/krypton/krypton0> "krypton level 0"
