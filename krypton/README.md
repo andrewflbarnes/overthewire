@@ -36,11 +36,21 @@ Instructions can be found for each level at URLs like below:
 https://overthewire.org/wargames/krypton/krypton<level>.html
 ```
 
+Files which require decoding for the next level can be found in `/kypton/krypton<current level>/krypton<next level>` e.g.
+if you are on level 1 then you will find the ciphertext in `/krypton/krypton1/krypton2`
+
 ##### 0
 
 Decode the password from the [level 0 page][2]
 
 ##### 1
+
+Standard ROT13
+`tr 'A-Z' 'N-ZA-M' < /krypton/krypton1/krypton2`
+
+##### 2
+
+
 
 
 [1]: <https://overthewire.org/wargames/krypton/> "krypton wargames landing page"
