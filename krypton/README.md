@@ -93,6 +93,38 @@ tr $guess ETAOINSHRDLCUMWFGYPBVKJXQZ < <(cat found*)
 tr $solved_guess ETAOINSHRDLCUMWFGYPBVKJXQZ < krypton4
 ```
 
+##### 4
+
+We know the key length is 6 so we can do frquency analysis on each group of every 6th letter. We don't
+need to do "full" analysis here - as long as we can find an offset such that within the first few letters
+we find some or most of those expected we have worked it out.
+
+For example if we had frequency analysis for one of the groups where the first few letters are
+```
+WHDR...
+```
+we can be reasonably sure the offset is 3/C since this maps those first few letters to
+```
+TEAO...
+```
+which seems like a reasonable approximation of Lewand (`ETAOIN...`).
+
+```bash
+cd /krypton/krypton4
+
+for i in {0..5}
+do
+    freq=$(sed 's/ //g;s/\(.\)/\1\n/g' < <(cat found*) \
+    | awk -v mod=6 -v r=$i 'NR%mod==r' \
+    | sort \
+    | uniq -c \
+    | sort -nr \
+    | awk '{printf $2}')
+
+    echo $freq
+done
+```
+
 [1]: <https://overthewire.org/wargames/krypton/> "krypton wargames landing page"
 [2]: <https://overthewire.org/wargames/krypton/krypton0> "krypton level 0"
 [3]: <https://crypto.interactive-maths.com/frequency-analysis-breaking-the-code.html> "Frequency analysis online"
