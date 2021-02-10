@@ -39,6 +39,12 @@ https://overthewire.org/wargames/krypton/krypton<level>.html
 Files which require decoding for the next level can be found in `/kypton/krypton<current level>/krypton<next level>` e.g.
 if you are on level 1 then you will find the ciphertext in `/krypton/krypton1/krypton2`
 
+Most commonly occurring english letters:
+```
+Concise Oxford dictionary:  EARIOTNSLCUDPMHGBFYWKVXZJQ
+Lewand:                     ETAOINSHRDLCUMWFGYPBVKJXQZ
+```
+
 ##### 0
 
 Decode the password from the [level 0 page][2]
@@ -65,5 +71,28 @@ tr "$sub" "A-Z" < /krypton/krypton2/krypton3
 Note: Looks like you need to copy the encrypt binary as well or it won't be able to write to the file - probably some issue
 with the EUID.
 
+##### 3
+
+Use the below for an initial guess with Lewand subsitution and then iterate. Alternatively use something like [this crypto site][3]
+```bash
+cd /krypton/krypton3
+
+guess=$(for i in {A..Z}
+do
+    printf "%d %s\n" $(fgrep -o $i <(cat found*) | wc -l) $i
+done \
+| sort -rn \
+| awk '{printf $2}')
+
+echo $guess
+
+# iterate on the below making adjustments to guess
+tr $guess ETAOINSHRDLCUMWFGYPBVKJXQZ < <(cat found*)
+
+# once the above is solved
+tr $solved_guess ETAOINSHRDLCUMWFGYPBVKJXQZ < krypton4
+```
+
 [1]: <https://overthewire.org/wargames/krypton/> "krypton wargames landing page"
 [2]: <https://overthewire.org/wargames/krypton/krypton0> "krypton level 0"
+[3]: <https://crypto.interactive-maths.com/frequency-analysis-breaking-the-code.html> "Frequency analysis online"
